@@ -308,4 +308,63 @@ namespace OOPAssignment05
     }
 
     #endregion
+    #region PROGRAM ENTRY POINT
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            #region PART 02: PRACTICAL EXECUTION
+
+            // a. Create a Cinema and open it
+            Cinema cinema = new Cinema("Grand Cinema");
+            cinema.OpenCinema();
+            Console.WriteLine();
+
+            // b. Create one of each ticket type, book them, and add to Cinema
+            StandardTicket t1 = new StandardTicket("Inception", 80m, "A5");
+            VIPTicket t2 = new VIPTicket("Avengers", 200m, true);
+            IMAXTicket t3 = new IMAXTicket("Dune", 100m, true); // Price = 100 + 30 (3D) = 130
+
+            t1.Book();
+            t2.Book();
+            t3.Book();
+
+            cinema.AddTicket(t1);
+            cinema.AddTicket(t2);
+            cinema.AddTicket(t3);
+
+            // c. Print all tickets through the Cinema
+            cinema.PrintAllTickets();
+            Console.WriteLine();
+
+            // d. Clone VIP ticket, change clone's movie name, print both
+            Console.WriteLine("--- Clone Test ---");
+            VIPTicket t2Clone = (VIPTicket)t2.Clone();
+            t2Clone.MovieName = "Interstellar";
+
+            Console.Write("Original : ");
+            t2.Print();
+            Console.Write("Clone    : ");
+            t2Clone.Print();
+            Console.WriteLine();
+
+            // e. Cancel one ticket and reprint it
+            Console.WriteLine("--- After Cancellation ---");
+            t1.Cancel();
+            t1.Print();
+            Console.WriteLine();
+
+            // f. Use utility method to print an array of printable tickets
+            IPrintable[] printableTickets = new IPrintable[] { t1, t2, t3 };
+            BookingHelper.PrintAll(printableTickets);
+
+            // g. Close Cinema
+            cinema.CloseCinema();
+
+            #endregion
+        }
+    }
+
+    #endregion
 }
