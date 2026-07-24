@@ -75,4 +75,80 @@ namespace OOPAssignment05
     }
 
     #endregion
+    #region PART 02 - QUESTION 1: ABSTRACT BASE TICKET CLASS
+
+    public abstract class Ticket : IPrintable, IBookable, ICloneable
+    {
+        private static int totalTickets = 0;
+
+        private string movieName = "Unknown";
+        private decimal price = 1m;
+
+        public int TicketId { get; }
+
+        public string MovieName
+        {
+            get => movieName;
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    movieName = value;
+                }
+            }
+        }
+
+        public decimal Price
+        {
+            get => price;
+            set
+            {
+                if (value > 0)
+                {
+                    price = value;
+                }
+            }
+        }
+
+        public decimal PriceAfterTax => Price * 1.14m;
+
+        // IBookable Implementation
+        public bool IsBooked { get; private set; }
+
+        public Ticket(string movieName, decimal price)
+        {
+            TicketId = ++totalTickets;
+            MovieName = movieName;
+            Price = price;
+            IsBooked = false;
+        }
+
+        public Ticket(Ticket other)
+        {
+            TicketId = ++totalTickets;
+            MovieName = other.MovieName;
+            Price = other.Price;
+            IsBooked = false; // Copy starts unbooked
+        }
+
+        public bool Book()
+        {
+            if (IsBooked) return false;
+            IsBooked = true;
+            return true;
+        }
+
+        public bool Cancel()
+        {
+            if (!IsBooked) return false;
+            IsBooked = false;
+            return true;
+        }
+
+        public abstract void Print();
+
+        public abstract object Clone();
+    }
+
+    #endregion
 }
