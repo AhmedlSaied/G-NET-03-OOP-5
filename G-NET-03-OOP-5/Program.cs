@@ -151,4 +151,95 @@ namespace OOPAssignment05
     }
 
     #endregion
+    #region PART 02 - QUESTION 2: CHILD TICKET CLASSES
+
+    public class StandardTicket : Ticket
+    {
+        public string SeatNumber { get; set; }
+
+        public StandardTicket(string movieName, decimal price, string seatNumber)
+            : base(movieName, price)
+        {
+            SeatNumber = seatNumber;
+        }
+
+        // Copy Constructor for Deep Copying
+        public StandardTicket(StandardTicket other) : base(other)
+        {
+            SeatNumber = other.SeatNumber;
+        }
+
+        public override void Print()
+        {
+            string bookedStr = IsBooked ? "Yes" : "No";
+            Console.WriteLine($"[Ticket #{TicketId}] {MovieName} | Standard | Seat: {SeatNumber} | Price: {Price:F0} | After Tax: {PriceAfterTax:F1} | Booked: {bookedStr}");
+        }
+
+        public override object Clone()
+        {
+            return new StandardTicket(this);
+        }
+    }
+
+    public class VIPTicket : Ticket
+    {
+        public bool LoungeAccess { get; set; }
+        public decimal ServiceFee { get; } = 50m;
+
+        public VIPTicket(string movieName, decimal price, bool loungeAccess)
+            : base(movieName, price)
+        {
+            LoungeAccess = loungeAccess;
+        }
+
+        // Copy Constructor for Deep Copying
+        public VIPTicket(VIPTicket other) : base(other)
+        {
+            LoungeAccess = other.LoungeAccess;
+            ServiceFee = other.ServiceFee;
+        }
+
+        public override void Print()
+        {
+            string loungeStr = LoungeAccess ? "Yes" : "No";
+            string bookedStr = IsBooked ? "Yes" : "No";
+            Console.WriteLine($"[Ticket #{TicketId}] {MovieName} | VIP | Lounge: {loungeStr} | Fee: {ServiceFee:F0} | Price: {Price:F0} | After Tax: {PriceAfterTax:F0} | Booked: {bookedStr}");
+        }
+
+        public override object Clone()
+        {
+            return new VIPTicket(this);
+        }
+    }
+
+    public class IMAXTicket : Ticket
+    {
+        public bool Is3D { get; set; }
+
+        public IMAXTicket(string movieName, decimal price, bool is3D)
+            : base(movieName, price + (is3D ? 30m : 0m))
+        {
+            Is3D = is3D;
+        }
+
+        // Copy Constructor for Deep Copying
+        public IMAXTicket(IMAXTicket other) : base(other)
+        {
+            Is3D = other.Is3D;
+        }
+
+        public override void Print()
+        {
+            string is3DStr = Is3D ? "Yes" : "No";
+            string bookedStr = IsBooked ? "Yes" : "No";
+            Console.WriteLine($"[Ticket #{TicketId}] {MovieName} | IMAX | 3D: {is3DStr} | Price: {Price:F0} | After Tax: {PriceAfterTax:F1} | Booked: {bookedStr}");
+        }
+
+        public override object Clone()
+        {
+            return new IMAXTicket(this);
+        }
+    }
+
+    #endregion
 }
