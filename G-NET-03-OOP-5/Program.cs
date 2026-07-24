@@ -242,4 +242,70 @@ namespace OOPAssignment05
     }
 
     #endregion
+    #region PART 02 - QUESTION 3: CINEMA CLASS & BOOKING HELPER
+
+    public class Cinema
+    {
+        public string CinemaName { get; set; }
+        private readonly Projector projector;
+        private readonly Ticket[] tickets = new Ticket[20];
+
+        public Cinema(string cinemaName)
+        {
+            CinemaName = cinemaName;
+            projector = new Projector();
+        }
+
+        public bool AddTicket(Ticket t)
+        {
+            for (int i = 0; i < tickets.Length; i++)
+            {
+                if (tickets[i] == null)
+                {
+                    tickets[i] = t;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void PrintAllTickets()
+        {
+            Console.WriteLine("--- All Tickets ---");
+            for (int i = 0; i < tickets.Length; i++)
+            {
+                if (tickets[i] != null)
+                {
+                    tickets[i].Print();
+                }
+            }
+        }
+
+        public void OpenCinema()
+        {
+            Console.WriteLine("=== Cinema Opened ===");
+            projector.Start();
+        }
+
+        public void CloseCinema()
+        {
+            Console.WriteLine("\n=== Cinema Closed ===");
+            projector.Stop();
+        }
+    }
+
+    public static class BookingHelper
+    {
+        // Interface Polymorphism: Accepts any array of IPrintable objects
+        public static void PrintAll(IPrintable[] printables)
+        {
+            Console.WriteLine("--- BookingHelper.PrintAll ---");
+            foreach (var item in printables)
+            {
+                item?.Print();
+            }
+        }
+    }
+
+    #endregion
 }
