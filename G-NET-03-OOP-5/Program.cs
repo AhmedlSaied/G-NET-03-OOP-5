@@ -58,4 +58,21 @@ namespace OOPAssignment05
     }
 
     #endregion
+    #region CUSTOM INTERFACES
+
+    // Requirement 1: Unified Printing Contract
+    public interface IPrintable
+    {
+        void Print();
+    }
+
+    // Requirement 2: Booking & Cancellation Contract
+    public interface IBookable
+    {
+        bool IsBooked { get; }
+        bool Book();
+        bool Cancel();
+    }
+
+    #endregion
 }
